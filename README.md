@@ -1,41 +1,48 @@
-# 🦅 Desafio de Estágio - Laboratório Galgos (PUC-Rio)
+#  Desafio de Estágio - Laboratório Galgos (PUC-Rio)
 ## Solução para o Problema do Caixeiro-Viajante (TSP)
 
-Este repositório contém a solução para o desafio técnico do Laboratório Galgos. O foco aqui não foi apenas "resolver o problema", mas construir um código organizado, fácil de ler e que respeite os padrões clássicos da TSPLib 95.
+Este repositório contém a solução para o desafio técnico do **Laboratório Galgos**. O foco foi construir um código modular, organizado e que respeite os padrões clássicos da **TSPLib 95**.
 
+---
 
-## Como o projeto foi estruturado (Metodologia)
+## Metodologia e Estrutura
 
-Para auxiliar na estruturação e garantir que nenhum detalhe técnico fosse esquecido, foi configurado um Agente Personalizado (Gemini) como um "copiloto" de Otimização.
+Para garantir o rigor técnico, configurei um **Agente Personalizado (Gemini)** como copiloto, alimentado com o manual da TSPLib e princípios de **SOLID**.
 
-O agente foi alimentado com o manual da TSPLIB 95 e princípios de SOLID para auxiliar na manutenção do código modular. O Strategy Pattern foi utilizado porque, se no futuro for desejado testar um Algoritmo Genético ou um 2-Opt, não é necessário modificar o carregamento dos dados basta "conectar" a nova estratégia.
+Utilizei o **Strategy Pattern** para permitir a troca fácil entre algoritmos. Isso significa que o carregamento dos dados é independente da lógica de resolução, permitindo escalabilidade para novos métodos.
 
-### Transparência: A conversa e como a IA foi usada para estruturar o projeto podem ser conferidas aqui: [https://gemini.google.com/gem/17yXkcExhtJ8oUPRXuFLd1SbL0A4Kjoro?usp=sharing]
+> **Transparência:** A conversa e o uso da IA para estruturar o projeto podem ser conferidos aqui: [https://gemini.google.com/gem/17yXkcExhtJ8oUPRXuFLd1SbL0A4Kjoro?usp=sharing]
 
-## Desafios Encontrados
+---
 
-Nem tudo foi "cópia e cola". Um ponto interessante que surgiu foi o erro de indexação (Offset Mismatch):
-- O Problema:A TSPLib conta as cidades a partir do 1 (1-based), mas o Python e o NumPy começam do 0.
-- A Solução: Foi percebido que o código inicial gerava um `KeyError: 0`. Foi necessário intervir manualmente para mapear os IDs corretamente, garantindo que o cálculo da distância correspondesse ao oficial.
-
-
-## Primeiros Resultados
-
-Para o primeiro teste, foi utilizada a instância eil51 (51 cidades):
+## Evolução dos Resultados (Instância eil51)
 
 
 | Algoritmo | Distância | Ótimo (TSPLib) | Gap (%) |
 | :--- | :--- | :--- | :--- |
-| Nearest Neighbor | 511 | 426 | ~19,9% |
+| Nearest Neighbor (Baseline) | 511 | 426 | ~19,9% |
+| **Nearest Neighbor + 2-Opt** | **441** | 426 | **~3,5%** |
 
-O que isso significa?
-O resultado de 511 demonstra que o algoritmo "guloso" funciona, mas é "parcialmente cego": ele escolhe a cidade mais próxima no momento e acaba deixando arestas gigantescas para o final. Ter um Gap de quase 20% é o que motiva a implementar um refinamento (como o 2-Opt) no próximo passo.
+### Análise Crítica
+A transição do **Nearest Neighbor** (Algoritmo Construtivo) para o **2-Opt** (Busca Local) reduziu o custo em **13,7%**.
+- O **NN** é "míope": escolhe o vizinho mais próximo e deixa arestas longas para o final.
+- O **2-Opt** refinou a rota, mas estacionou em **441** por ter atingido um **Ótimo Local**: uma solução onde nenhuma troca simples de duas arestas melhora o caminho. Escapar desse vale exigiria técnicas como *Simulated Annealing*.
 
-## Uso de IA (O que foi feito e o que a IA fez)
+---
 
-Seguindo o edital, os papéis são:
-- IA: Auxiliou com o "esqueleto" do código (boilerplate), sugestões de padrões de projeto e formatação deste README.
-- Candidato: Fez a lógica de correção de bugs de indexação, validou os cálculos de distância (EUC_2D), analisou os resultados e tomou as decisões de arquitetura.
+## Desafios Técnicos: O "Erro de Ouro"
+
+Durante a implementação, identifiquei um **Indexing Offset Mismatch**:
+- **O Problema:** `IndexError: index 51 out of bounds`. As instâncias da TSPLib são *1-based*, enquanto o NumPy é *0-based*.
+- **A Solução:** Intervi manualmente no código sugerido pela IA para implementar uma normalização de índices. Esse ajuste garantiu que a busca local acessasse os pesos corretos da matriz sem quebrar a execução.
+
+---
+
+## Divisão de Papéis (IA e Candidato)
+- **IA:** Auxiliou com o "esqueleto" (boilerplate), sugestão de padrões de projeto e revisão de normas técnicas.
+- **Candidato:** Lógica de correção de indexação, validação dos cálculos de distância (EUC_2D), análise de GAP e decisões de arquitetura.
+
+---
 
 ## Como executar
 1. Instale as dependências: `pip install -r requirements.txt`
