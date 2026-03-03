@@ -1,5 +1,6 @@
 from src.loader import TSPLoader
 from src.strategies import NearestNeighborStrategy, TwoOptStrategy
+from src.visualizer import plot_tsp_comparison
 
 # 1. Carregar dados (Instância da TSPLib)
 matrix, problem = TSPLoader.load_matrix("data/eil51.tsp")
@@ -23,3 +24,5 @@ print(f"Resultado Inicial (NN): {dist_nn}")
 print(f"Resultado Refinado (2-Opt): {dist_refined}")
 print(f"Melhoria Obtida: {dist_nn - dist_refined} unidades de distância.")
 print("-" * 30)
+
+plot_tsp_comparison(problem, initial_tour, refined_tour, dist_nn, dist_refined)
