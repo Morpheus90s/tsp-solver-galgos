@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 import numpy as np
+import math
+import random
 
 # Interface Base (Strategy Pattern)
 class TSPSolverStrategy(ABC):
@@ -57,5 +59,39 @@ class TwoOptStrategy(TSPSolverStrategy):
                         # Realiza o swap: inverte o segmento entre i e j
                         best_tour[i:j+1] = reversed(best_tour[i:j+1])
                         improved = True
+            
+        return best_tour
+
+class SimulatedAnnealingStrategy(TSPSolverStrategy):
+    def solve(self, matrix, initial_tour, T_start=100.0, alpha=0.995, T_min=0.001):
+        current_tour = list(initial_tour)
+        # O custo inicial pode ser calculado via problem.get_weight ou matriz
+        def get_cost(t):
+            return sum(matrix[t[i]-1][t[(i+1)%len(t)]-1] for i in range(len(t)))
+
+        current_cost = get_cost(current_tour)
+        best_tour = list(current_tour)
+        best_cost = current_cost
+        T = T_start
+
+        while T > T_min:
+            # Gera um vizinho usando um 2-opt swap aleatório
+            i, j = sorted(random.sample(range(len(current_tour)), 2))
+            neighbor_tour = current_tour[:i] + current_tour[i:j+1][::-1] + current_tour[j+1:]
+            neighbor_cost = get_cost(neighbor_tour)
+            
+            # Cálculo do Delta
+            delta = neighbor_cost - current_cost
+            
+            # Critério de Aceitação de Boltzmann
+            if delta < 0 or random.random() < math.exp(-delta / T):
+                current_tour = neighbor_tour
+                current_cost = neighbor_cost
+                
+                if current_cost < best_cost:
+                    best_tour = list(current_tour)
+                    best_cost = current_cost
+            
+            T *= alpha  # Resfriamento geométrico
             
         return best_tour
