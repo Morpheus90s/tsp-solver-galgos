@@ -11,7 +11,7 @@ Para garantir o rigor técnico, configurei um **Agente Personalizado (Gemini)** 
 
 Utilizei o **Strategy Pattern** para permitir a troca fácil entre algoritmos. Isso garante que o carregamento dos dados seja independente da lógica de resolução, permitindo escalabilidade para novos métodos de otimização.
 
-> **Transparência:** A conversa e o uso da IA para estruturar o projeto podem ser conferidos aqui: []
+> **Transparência**: O registro detalhado das interações, decisões técnicas e o uso da IA para estruturar o projeto podem ser conferidos no log interno: AI_LOG.md
 
 ---
 
