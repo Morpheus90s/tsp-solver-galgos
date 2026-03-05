@@ -1,0 +1,7 @@
+--- RELATÓRIO DE EXPERIMENTOS (Instância: eil51) ---
+Nearest Neighbor : 511
+Refinamento 2-Opt: 441
+Execuções SA (10x): [435, 441, 441, 435, 441, 441, 435, 441, 433, 441]
+SA (Melhor)      : 433
+SA (Média)       : 438.40
+========================================
