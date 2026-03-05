@@ -1,5 +1,3 @@
 numpy
 tsplib95
 matplotlib
-math
-random

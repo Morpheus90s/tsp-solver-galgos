@@ -11,7 +11,7 @@ Para garantir o rigor técnico, configurei um **Agente Personalizado (Gemini)** 
 
 Utilizei o **Strategy Pattern** para permitir a troca fácil entre algoritmos. Isso garante que o carregamento dos dados seja independente da lógica de resolução, permitindo escalabilidade para novos métodos de otimização.
 
-> **Transparência:** A conversa e o uso da IA para estruturar o projeto podem ser conferidos aqui: [https://gemini.google.com/gem/17yXkcExhtJ8oUPRXuFLd1SbL0A4Kjoro?usp=sharing]
+> **Transparência:** A conversa e o uso da IA para estruturar o projeto podem ser conferidos aqui: []
 
 ---
 
@@ -58,3 +58,8 @@ Em conformidade com o edital, utilizou-se o **Gemini (Google)** como ferramenta 
 ## Como executar
 1. Instale as dependências: `pip install -r requirements.txt`
 2. Execute o script principal: `python3 main.py`
+
+---
+## Visualização das Rotas
+![Comparação de Resultados](comparison_plot.png)
+*Comparativo entre a baseline (NN) e a solução otimizada (SA), evidenciando a remoção de cruzamentos e a redução do custo total.*

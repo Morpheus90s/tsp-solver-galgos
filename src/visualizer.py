@@ -24,5 +24,5 @@ def plot_tsp_comparison(problem, tour_nn, tour_2opt, dist_nn, dist_2opt):
     plt.tight_layout()
     # No Codespaces, salvamos a imagem para ver no explorer lateral
     plt.savefig('comparison_plot.png')
-    print("✅ Gráfico gerado com sucesso: comparison_plot.png")
+    print("Gráfico gerado com sucesso: comparison_plot.png")
     plt.close()

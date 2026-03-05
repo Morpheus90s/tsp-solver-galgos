@@ -12,7 +12,8 @@ class TSPLoader:
 
         for i in range(dimension):
             for j in range(dimension):
-                # Aplica o arredondamento oficial nint da TSPLib
-                matrix[i][j] = problem.get_weight(nodes[i], nodes[j])
+               # problem.get_weight já aplica internamente o arredondamento 'nint' (EUC_2D)
+               matrix[i][j] = problem.get_weight(nodes[i], nodes[j])
+
         
         return matrix, problem
